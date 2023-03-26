@@ -14,16 +14,17 @@ app.set('view engine', 'html');
 app.use(express.static("./public"));
 
 app.get("/", (req,res)=> {
-    res.send("hey there");
+    res.render("index.html");
 });
 
 app.get("/information", (req,res)=> {
     res.render("information.html");
 });
 
-app.get("/high-scores", (rew,res)=> {
+app.get("/high-scores", (req,res)=> {
     res.render("high-scores.html");
 });
 
 export default app;
+
 
