@@ -14,8 +14,8 @@
     "nodemon": "^2.0.21"
   },
   "scripts": {
-    "start": "npm run build --prefix public/react && node index.js",
-    "start-dev": "npm run build --prefix public/react && nodemon index.js",
+    "start": "npm run build --prefix react && node index.js",
+    "start-dev": "npm run build --prefix react && nodemon index.js",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "type": "module",
