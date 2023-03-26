@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "npm run build --prefix react && node index.js",
-    "start-dev": "npm run build --prefix react && nodemon index.js",
+    "start-dev": "npm run build --prefix react && start sass --no-source-map --watch scss/main.scss public/css/main.css && start nodemon index.js",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "type": "module",
