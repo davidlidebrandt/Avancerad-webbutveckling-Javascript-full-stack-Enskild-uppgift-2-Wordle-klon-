@@ -47,7 +47,14 @@ body {
 }
 
 .footer {
+    align-items: center;
     background-color: $c-green-dark;
+    color: $c-green-light;
+    display: flex;
+    a {
+        color: $c-light;
+        margin-left: 0.5rem;
+    }
 }
 
 .active {

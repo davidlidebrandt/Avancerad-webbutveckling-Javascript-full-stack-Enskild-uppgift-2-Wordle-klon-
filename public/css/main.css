@@ -47,7 +47,14 @@ body {
 }
 
 .footer {
+  align-items: center;
   background-color: #3C6255;
+  color: #A6BB8D;
+  display: flex;
+}
+.footer a {
+  color: #EAE7B1;
+  margin-left: 0.5rem;
 }
 
 .active {
