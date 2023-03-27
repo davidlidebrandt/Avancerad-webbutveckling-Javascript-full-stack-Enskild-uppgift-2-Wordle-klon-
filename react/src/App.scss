@@ -1,0 +1,29 @@
+@import "../scss/variables.scss";
+
+.container {
+    background-color: $c-green-light;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    width: 50%;
+    height: 50%;
+    button {
+        font-family: 'Nunito', sans-serif;
+    }
+    h2 {
+        background-color: $c-green-dark;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    img {
+        height: 20vh;
+    }
+    label {
+        display: block;
+    }
+    input {
+        display: block;
+    }
+}
