@@ -1,3 +1,55 @@
 body {
   background-color: #EAE7B1;
+  font-family: "Nunito", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  background-color: #3C6255;
+  color: #EAE7B1;
+  align-items: center;
+}
+@media screen and (min-width: 500px) {
+  .header {
+    display: flex;
+  }
+}
+
+.header-logo {
+  display: inline-block;
+  margin: 0;
+  max-width: max-content;
+}
+.header-logo img {
+  max-height: 20vh;
+}
+
+.main-nav {
+  display: block;
+}
+.main-nav ul {
+  list-style: none;
+  display: flex;
+}
+.main-nav li {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.main-nav-link {
+  text-decoration: none;
+  color: #EAE7B1;
+}
+
+.main {
+  min-height: 100vh;
+}
+
+.footer {
+  background-color: #3C6255;
+}
+
+.active {
+  color: #A6BB8D;
 }

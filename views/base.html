@@ -5,16 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wordle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     {% block top_scripts %}
     {% endblock %}
 </head>
 <body>
-    <header>I am a header</header>
+    <header class="header">
+        <h1 class="header-logo"><img src="img/logo.png" alt="Logo"></h1>
+        <nav class="main-nav">
+            <ul>
+                <li><a class="main-nav-link game-link" href="/">Game</a></li>
+                <li><a class="main-nav-link high-scores-link" href="/high-scores">High Scores</a></li>
+                <li><a class="main-nav-link info-link" href="/information">Info</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main">
     {% block main %}
     {% endblock %}
+    </main>
     {% block bottom_scripts %}
     {% endblock %}
-    <footer>I am a footer</footer>
+    <footer class="footer">I am a footer</footer>
+    <script src="js/main.JS"></script>
 </body>
 </html>

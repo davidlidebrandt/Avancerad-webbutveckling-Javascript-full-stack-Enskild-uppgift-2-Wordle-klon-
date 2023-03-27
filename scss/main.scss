@@ -2,4 +2,54 @@
 
 body {
     background-color: $c-light;
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    @media screen and (min-width: $mq-breakpoint) {
+        display: flex;
+      }
+    background-color: $c-green-dark;
+    color: $c-light;
+    align-items: center;
+}
+
+.header-logo {
+    display: inline-block;
+    margin: 0;
+    max-width: max-content;
+    img {
+        max-height: 20vh;
+    }
+}
+
+.main-nav {
+    display: block;
+    ul {
+        list-style: none;
+        display: flex;
+    }
+    li {
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+    }
+}
+
+.main-nav-link {
+    text-decoration: none;
+    color: $c-light;
+}
+
+.main {
+    min-height: 100vh;
+}
+
+.footer {
+    background-color: $c-green-dark;
+}
+
+.active {
+    color: $c-green-light;
 }
