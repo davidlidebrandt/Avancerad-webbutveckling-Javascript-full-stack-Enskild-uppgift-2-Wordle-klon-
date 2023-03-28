@@ -33,10 +33,10 @@ export default function Game() {
                 <small>Correct letter</small>
             </div>
             <div className='color-box light-box'>
-                <small>Misplaced</small>
+                <small>Misplaced letter</small>
             </div>
             <div className='color-box'>
-                <small>Incorrect</small>
+                <small>Incorrect letter</small>
             </div>
         </div>
         <WordGuessForm></WordGuessForm>
