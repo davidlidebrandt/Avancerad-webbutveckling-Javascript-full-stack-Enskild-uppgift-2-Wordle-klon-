@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import WordGuessForm from './WordGuessForm';
 import "../scss/Game.scss";
 
 const letters = [
@@ -27,6 +28,7 @@ export default function Game() {
   return (
     <div className='game-container'>
         {currentLetters}
+        <WordGuessForm></WordGuessForm>
     </div>
   )
 }
