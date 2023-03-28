@@ -17,6 +17,29 @@
     .correct-letter {
         color: $c-green-dark;
     }
+    .color-box {
+        align-items: center;
+        background-color: #000;
+        border-radius: 10px;
+        color: $c-green-light;
+        display: flex;
+        margin: 1rem;
+        justify-content: center;
+        width: 15%;
+        height: 4vh;
+    }
+    .color-boxed-container {
+        justify-content: center;
+        display: flex;
+    }
+    .green-box {
+        background-color: $c-green-dark;
+        color: $c-green-light;
+    }
+    .light-box {
+        background-color: $c-light;
+        color: $c-green-dark;
+    }
     .misplaced-letter {
         color: $c-light;
     }

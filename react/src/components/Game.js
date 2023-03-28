@@ -28,6 +28,17 @@ export default function Game() {
   return (
     <div className='game-container'>
         {currentLetters}
+        <div className='color-boxed-container'>
+            <div className='color-box green-box'>
+                <small>Correct letter</small>
+            </div>
+            <div className='color-box light-box'>
+                <small>Misplaced</small>
+            </div>
+            <div className='color-box'>
+                <small>Incorrect</small>
+            </div>
+        </div>
         <WordGuessForm></WordGuessForm>
     </div>
   )
