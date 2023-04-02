@@ -2,7 +2,7 @@ import React from "react";
 
 export default function OptionsForm({
   gameOptions,
-  gameOptions: { numberOfLetters, duplicateLetters },
+  gameOptions: { numberOfLetters, duplicateLetters, gameHasStarted },
   setGameOptions,
   startGame,
 }) {
@@ -11,7 +11,10 @@ export default function OptionsForm({
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        startGame();
+        setGameOptions({
+          ...gameOptions,
+          gameHasStarted: true
+        })
       }}
     >
       <label htmlFor="letters">
@@ -22,7 +25,7 @@ export default function OptionsForm({
         onChange={(e) => {
             setGameOptions({
                 ...gameOptions,
-                NumberOfLetters: e.target.value
+                numberOfLetters: Number(e.target.value)
             });
         }}
         required
