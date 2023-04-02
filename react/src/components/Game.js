@@ -24,7 +24,7 @@ export default function Game() {
         return <div key={i} className='letter-box'>{l.letter}</div>
     }
   });
-  console.log(currentLetters)
+
   return (
     <div className='game-container'>
         {currentLetters}
