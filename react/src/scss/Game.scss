@@ -1,0 +1,69 @@
+@import "../scss/variables.scss";
+
+.game-container {
+    text-align: center;
+    padding: 1rem;
+    .letter-box {
+        border: 2px solid $c-light;
+        border-radius: 10px;
+        color: black;
+        display: inline-block;
+        font-size: 2rem;
+        width: 10%;
+        text-align: center;
+        padding: 0.5rem;
+        margin: 0.75rem;
+    }
+    .correct-letter {
+        color: $c-green-dark;
+    }
+    .color-box {
+        align-items: center;
+        background-color: #000;
+        border-radius: 10px;
+        color: $c-green-light;
+        display: flex;
+        margin: 1rem;
+        justify-content: center;
+        width: 15%;
+        height: 4vh;
+    }
+    .color-boxed-container {
+        justify-content: center;
+        display: flex;
+    }
+    .green-box {
+        background-color: $c-green-dark;
+        color: $c-green-light;
+    }
+    .light-box {
+        background-color: $c-light;
+        color: $c-green-dark;
+    }
+    .misplaced-letter {
+        color: $c-light;
+    }
+    .word-guess-form {
+        text-align: center;
+        padding: 1em 4rem;
+    }
+    .word-input {
+        border: none;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        width: 90%;
+        margin-top: 1rem;
+    }
+
+    .word-input-button {
+        background-color: $c-green-dark;
+        border: none;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        color: $c-light;
+        cursor: pointer;
+        font-size: 1.25rem;
+        margin-top: 1rem;
+        padding: 0.5rem 2rem;
+    }
+}
