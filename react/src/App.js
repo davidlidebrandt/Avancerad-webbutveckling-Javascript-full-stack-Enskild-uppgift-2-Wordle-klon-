@@ -14,7 +14,14 @@ const App = () => {
     numberOfLetters: 4,
     duplicateLetters: false,
     gameHasStarted: false,
-  })
+  });
+
+  const [currentGame, setCurrentGame] = useState({
+    correctWord: "test",
+    currentGuess: "",
+    guesses: [],
+    startTime: Date.now()
+  });
 
   function startGame() {
     setGameHasStarted(true);
