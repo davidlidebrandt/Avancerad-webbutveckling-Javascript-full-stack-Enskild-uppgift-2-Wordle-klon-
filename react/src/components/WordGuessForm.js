@@ -7,7 +7,7 @@ export default function WordGuessForm({currentGame, currentGame: {current, guess
         ...currentGame,
         guesses: [...guesses, current]
     });
-    //console.log(currentGame);
+
   }
   return (
     <form onSubmit={(e)=> {enterWord(e)}} className='word-guess-form'>
