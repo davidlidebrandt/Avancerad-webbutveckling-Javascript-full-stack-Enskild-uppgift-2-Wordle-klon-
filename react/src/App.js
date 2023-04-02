@@ -12,7 +12,8 @@ const App = () => {
   });
 
   const [currentGame, setCurrentGame] = useState({
-    currentGuess: [{w: "correct"}, {k: "incorrect"}, {k: "incorrect"}, {t: "misplaced"}],
+    checkedLetters: [{w: "correct"}, {k: "incorrect"}, {k: "incorrect"}, {t: "misplaced"}],
+    currentWord: "",
     guesses: [],
     startTime: Date.now(),
   });
@@ -23,7 +24,7 @@ const App = () => {
         <img src={logo}></img>
       </h2>
       {gameOptions.gameHasStarted ? (
-        <Game gameOptions={gameOptions} currentGame={currentGame}></Game>
+        <Game gameOptions={gameOptions} currentGame={currentGame} setCurrentGame={setCurrentGame}></Game>
       ) : (
         <OptionsForm
           gameOptions={gameOptions}

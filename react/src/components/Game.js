@@ -3,10 +3,10 @@ import { useState } from 'react';
 import WordGuessForm from './WordGuessForm';
 import "../scss/Game.scss";
 
-export default function Game({gameOptions, currentGame}) {
-
-  let currentLetters = currentGame.currentGuess.map((l, i)=> {
-    console.log(Object.keys(l))
+export default function Game({gameOptions, currentGame, setCurrentGame}) {
+    console.log(currentGame)
+  let currentLetters = currentGame.checkedLetters.map((l, i)=> {
+   
     if(Object.values(l)[0] === "correct") {
         return <div key={i} className='letter-box correct-letter'>{Object.keys(l)}</div>
     }
@@ -32,7 +32,7 @@ export default function Game({gameOptions, currentGame}) {
                 <small>Incorrect letter</small>
             </div>
         </div>
-        <WordGuessForm currentGame={currentGame}></WordGuessForm>
+        <WordGuessForm currentGame={currentGame} setCurrentGame={setCurrentGame}></WordGuessForm>
     </div>
   )
 }
