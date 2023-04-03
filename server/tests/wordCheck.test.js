@@ -49,5 +49,9 @@ import {
         const result = wordCheck("hålla", "lista");
         expect(result[3]).toMatchObject({ L: "incorrect" });
       });
+      test("Should match object with key 'L' and value 'incorrect' for the third letter", () => {
+        const result = wordCheck("teks", "test");
+        expect(result[3]).toMatchObject({ S: "misplaced" });
+      });
   
   });

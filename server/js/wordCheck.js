@@ -26,14 +26,12 @@ export default function wordCheck(inputWord, correctWord){
             letterAndValue[currentLetter.toUpperCase()] = "misplaced";
             checkedLetters[index] = letterAndValue;
             inputWord[index] = null;
-            correctWord[index] = null;
+            correctWord[correctWord.indexOf(letter)] = null;
         }
         else if(letter != null) {
             const letterAndValue = {};
             letterAndValue[currentLetter.toUpperCase()] = "incorrect";
             checkedLetters[index] = letterAndValue;
-            inputWord[index] = null;
-            correctWord[index] = null;
         }
     });
     
