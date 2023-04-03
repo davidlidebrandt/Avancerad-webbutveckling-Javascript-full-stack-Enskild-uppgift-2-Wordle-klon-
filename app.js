@@ -1,9 +1,14 @@
 import express from "express";
 import nunjucks from "nunjucks";
-import axios from "axios";
+import mongoose from "mongoose";
+import * as uuid from "uuid";
+import dotenv from "dotenv";
 import fs from "fs";
 import filterGameOptions from "./server/js/filterGameOptions.js";
-import wordCheck from "./server/js/wordCheck.js"
+import wordCheck from "./server/js/wordCheck.js";
+import Game from "./server/models/Game.js";
+
+dotenv.config();
 
 const app = express();
 
@@ -11,6 +16,14 @@ const env = nunjucks.configure("views", {
   autoescape: true,
   express: app,
 });
+
+async function connectToDb() {
+  try {
+   
+  } catch (error) {}
+}
+
+connectToDb();
 
 app.set("view engine", "html");
 
@@ -47,8 +60,20 @@ app.post("/api/word", async (req, res) => {
     let words = fs.readFileSync("./server/words.json", "utf-8");
     words = JSON.parse(words);
     words = Object.keys(words);
-    const word = filterGameOptions(words, 5, true);
-    res.status(201).json({ data: word });
+    const word = filterGameOptions(words, numberOfLetters, duplicateLetters);
+    
+    const conn = await mongoose.connect(process.env.DB_URL);
+    const id = uuid.v4();
+    const newGame = new Game({
+      id:  id,
+      startTime: new Date(),
+      guesses: [],
+      correctWord: word
+    });
+    await newGame.save();
+    await conn.disconnect();
+    
+    res.status(201).json({ id:id, data: word });
   } catch (error) {
     res
       .status(500)
@@ -56,13 +81,13 @@ app.post("/api/word", async (req, res) => {
   }
 });
 
-app.post("/check-word", (req,res)=> {
+app.post("/check-word", (req, res) => {
   const gameId = req.body.gameId;
   const guessedWord = req.body.guessedWord;
 
-  //replace with data from DB
-  const correctWord = "teks";
-  
+  //replace with data from DB and add guessedWord to array of guesses
+  const correctWord = "test";
+
   const checkedLetters = wordCheck(guessedWord, correctWord);
   console.log(checkedLetters);
 });
