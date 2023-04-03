@@ -7,6 +7,7 @@ import fs from "fs";
 import filterGameOptions from "./server/js/filterGameOptions.js";
 import wordCheck from "./server/js/wordCheck.js";
 import Game from "./server/models/Game.js";
+import saveInDb from "./server/js/saveInDB.js";
 
 dotenv.config();
 
@@ -19,7 +20,6 @@ const env = nunjucks.configure("views", {
 
 async function connectToDb() {
   try {
-   
   } catch (error) {}
 }
 
@@ -44,15 +44,14 @@ app.get("/high-scores", (req, res) => {
 });
 
 app.post("/api/word", async (req, res) => {
-  const numberOfLetters = req.body.numberOfLetters;
-  const duplicateLetters = req.body.duplicateLetters;
-
-  if (
+  const { numberOfLetters, duplicateLetters } = req.body;
+  const incorrectInputTypes =
     isNaN(numberOfLetters) ||
     numberOfLetters < 4 ||
     numberOfLetters > 6 ||
-    typeof duplicateLetters !== "boolean"
-  ) {
+    typeof duplicateLetters !== "boolean";
+
+  if (incorrectInputTypes) {
     res.status(422).json({ error: "Invalid data" });
   }
 
@@ -61,20 +60,19 @@ app.post("/api/word", async (req, res) => {
     words = JSON.parse(words);
     words = Object.keys(words);
     const word = filterGameOptions(words, numberOfLetters, duplicateLetters);
-    
-    const conn = await mongoose.connect(process.env.DB_URL);
+
     const id = uuid.v4();
     const newGame = new Game({
-      id:  id,
+      id: id,
       startTime: new Date(),
       guesses: [],
-      correctWord: word
+      correctWord: word,
     });
-    await newGame.save();
-    await conn.disconnect();
-    
-    res.status(201).json({ id:id, data: word });
+    await saveInDb(process.env.DB_URL, newGame);
+
+    res.status(201).json({ id: id, data: word });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ error: "Error fetching the word, please try again" });
@@ -86,7 +84,10 @@ app.post("/check-word", (req, res) => {
   const guessedWord = req.body.guessedWord;
 
   //replace with data from DB and add guessedWord to array of guesses
-  const correctWord = "test";
+  let correctWord;
+
+  try {
+  } catch (error) {}
 
   const checkedLetters = wordCheck(guessedWord, correctWord);
   console.log(checkedLetters);
