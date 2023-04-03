@@ -61,7 +61,7 @@ app.post("/check-word", (req,res)=> {
   const guessedWord = req.body.guessedWord;
 
   //replace with data from DB
-  const correctWord = "test";
+  const correctWord = "teks";
   
   const checkedLetters = wordCheck(guessedWord, correctWord);
   console.log(checkedLetters);
