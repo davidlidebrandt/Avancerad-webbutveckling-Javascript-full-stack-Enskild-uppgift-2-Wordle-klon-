@@ -8,6 +8,7 @@ import filterGameOptions from "./server/js/filterGameOptions.js";
 import wordCheck from "./server/js/wordCheck.js";
 import Game from "./server/models/Game.js";
 import saveInDb from "./server/js/saveInDB.js";
+import updateOneFromDB from "./server/js/updateOneFromDB.js"
 
 dotenv.config();
 
@@ -17,13 +18,6 @@ const env = nunjucks.configure("views", {
   autoescape: true,
   express: app,
 });
-
-async function connectToDb() {
-  try {
-  } catch (error) {}
-}
-
-connectToDb();
 
 app.set("view engine", "html");
 
@@ -75,19 +69,21 @@ app.post("/api/word", async (req, res) => {
     console.log(error);
     res
       .status(500)
-      .json({ error: "Error fetching the word, please try again" });
+      .json({ error: error, errorMessage: "Error fetching the word, please try again" });
   }
 });
 
-app.post("/check-word", (req, res) => {
-  const gameId = req.body.gameId;
-  const guessedWord = req.body.guessedWord;
+app.post("/check-word", async (req, res) => {
+  const {gameId, guessedWord} = req.body;
 
   //replace with data from DB and add guessedWord to array of guesses
   let correctWord;
 
   try {
-  } catch (error) {}
+    await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord);
+  } catch (error) {
+    console.log(error)
+  }
 
   const checkedLetters = wordCheck(guessedWord, correctWord);
   console.log(checkedLetters);
