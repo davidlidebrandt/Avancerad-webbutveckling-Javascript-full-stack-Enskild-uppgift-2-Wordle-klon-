@@ -9,6 +9,7 @@ import wordCheck from "./server/js/wordCheck.js";
 import Game from "./server/models/Game.js";
 import saveInDb from "./server/js/saveInDB.js";
 import updateOneFromDB from "./server/js/updateOneFromDB.js"
+import highScoreRouter from "./server/js/highScoreRouter.js";
 
 dotenv.config();
 
@@ -25,16 +26,14 @@ app.use(express.static("./public"));
 
 app.use(express.json());
 
+app.use("/high-scores", highScoreRouter)
+
 app.get("/", (req, res) => {
   res.render("index.html");
 });
 
 app.get("/information", (req, res) => {
   res.render("information.html");
-});
-
-app.get("/high-scores", (req, res) => {
-  res.render("high-scores.html");
 });
 
 app.post("/api/word", async (req, res) => {
