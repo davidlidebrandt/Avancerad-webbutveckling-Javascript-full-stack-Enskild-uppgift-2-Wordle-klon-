@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 
-export default HighScore = mongoose.model("HighScore", {
+const HighScore = mongoose.model("HighScore", {
+    id: String,
     userName: String,
     wordLength: Number,
     guesses: Array,
     completionTime: Number
 });
+
+export default HighScore;

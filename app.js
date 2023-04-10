@@ -7,6 +7,7 @@ import fs from "fs";
 import filterGameOptions from "./server/js/filterGameOptions.js";
 import wordCheck from "./server/js/wordCheck.js";
 import Game from "./server/models/Game.js";
+import HighScore from "./server/models/highScore.js";
 import saveInDb from "./server/js/saveInDB.js";
 import getOneFromDB from "./server/js/getOneFromDB.js";
 import updateOneFromDB from "./server/js/updateOneFromDB.js"
@@ -16,6 +17,8 @@ import { countReset } from "console";
 dotenv.config();
 
 const app = express();
+
+const DBUrl = process.env.DB_URL;
 
 const env = nunjucks.configure("views", {
   autoescape: true,
@@ -73,6 +76,31 @@ app.post("/api/word", async (req, res) => {
       .json({ error: error, errorMessage: "Error fetching the word, please try again" });
   }
 });
+
+app.post("/api/add-score", async(req, res)=> {
+  const { gameId, userName } = req.body;
+
+  try {
+    const game = await getOneFromDB(DBUrl, Game, gameId);
+    const lastGuess = game.guesses.pop();
+    const correctWord = game.correctWord;
+    if(lastGuess === correctWord) {
+      const score = new HighScore({
+        id: uuid.v4(),
+        userName: userName,
+        wordLength: game.correctWord.length,
+        guesses: game.guesses,
+        completionTime: Date.now() - game.startTime,
+      });
+      console.log("h")
+      const savedScore = await saveInDb(DBUrl, score);
+      res.status(201).json({message: "Your score was saved", data: savedScore});
+    }
+    res.status(400).json({errorMessage: "Invalid data"});
+  } catch (error) {
+    res.status(400).json({errorMessage: "Invalid data", error:error});
+  }
+})
 
 app.post("/check-word", async (req, res) => {
   const {gameId, guessedWord} = req.body;

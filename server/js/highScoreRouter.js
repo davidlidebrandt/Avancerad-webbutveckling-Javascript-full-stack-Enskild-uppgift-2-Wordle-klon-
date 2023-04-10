@@ -1,15 +1,16 @@
-import { Router } from "express"
+import { Router } from "express";
 
 const highScoreRouter = Router();
+const DBUrl = process.env.DB_URL;
 
 highScoreRouter.use((req, res, next) => {
   next();
 })
-// define the home page route
+
 highScoreRouter.get('/', (req, res) => {
   res.render("high-scores.html");
 });
-// define the about route
+
 highScoreRouter.get('/duplicates', (req, res) => {
   res.send('Duplicates');
 });
