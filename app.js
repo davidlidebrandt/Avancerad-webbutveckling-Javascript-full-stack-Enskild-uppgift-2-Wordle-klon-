@@ -8,8 +8,10 @@ import filterGameOptions from "./server/js/filterGameOptions.js";
 import wordCheck from "./server/js/wordCheck.js";
 import Game from "./server/models/Game.js";
 import saveInDb from "./server/js/saveInDB.js";
+import getOneFromDB from "./server/js/getOneFromDB.js";
 import updateOneFromDB from "./server/js/updateOneFromDB.js"
 import highScoreRouter from "./server/js/highScoreRouter.js";
+import { countReset } from "console";
 
 dotenv.config();
 
@@ -74,18 +76,23 @@ app.post("/api/word", async (req, res) => {
 
 app.post("/check-word", async (req, res) => {
   const {gameId, guessedWord} = req.body;
-
-  //replace with data from DB and add guessedWord to array of guesses
   let correctWord;
 
   try {
-    await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord);
+    const currentGame = await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord);
+    const correctGuess = currentGame[0];
+    const gameData = currentGame[1];
+    correctWord = gameData.correctWord;
+    if(correctGuess) {
+      const currentGame = await getOneFromDB(process.env.DB_URL, Game, gameId);
+      res.status(201).json({message: "Congratulations! You guessed the right word", data: gameData});
+    }
   } catch (error) {
-    console.log(error)
+     res.status(404).json({error:error, errorMessage: "Game not found"});
   }
 
   const checkedLetters = wordCheck(guessedWord, correctWord);
-  console.log(checkedLetters);
+  res.status(201).json({data: checkedLetters});
 });
 
 export default app;

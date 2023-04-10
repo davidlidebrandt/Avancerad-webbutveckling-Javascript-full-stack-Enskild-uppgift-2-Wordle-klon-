@@ -6,7 +6,7 @@ export default async function updateOneFromDB(url,collection,id,guessedWord){
     console.log(data)
     await conn.disconnect();
     if(data.correctWord === guessedWord) {
-        return true;
+        return [true, data];
     }
-    return false;
+    return [false, data];
 }
