@@ -5,13 +5,14 @@ export default async function updateOneFromDB(
   collection,
   id,
   guessedWord,
-  gameFinished = false
+  updatedValues,
 ) {
   const conn = await mongoose.connect(url);
   const data = await collection.findOneAndUpdate(
     { id: id },
-    { $push: { guesses: guessedWord }, finished: gameFinished }
+    updatedValues
   );
+ 
   await conn.disconnect();
   if (data.correctWord === guessedWord) {
     return [true, data];

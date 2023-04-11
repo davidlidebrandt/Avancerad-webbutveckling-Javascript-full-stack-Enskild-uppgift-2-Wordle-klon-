@@ -108,15 +108,16 @@ app.post("/check-word", async (req, res) => {
 
   try {
     const {finished: gameAlreadyFinished} = await getOneFromDB(DBUrl, Game, gameId);
+    
     if(gameAlreadyFinished) {
       throw "Invalid game data";
     }
-    const currentGame = await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord);
+    const currentGame = await updateOneFromDB(DBUrl, Game, gameId, guessedWord, { $push: { guesses: guessedWord }});
     const correctGuess = currentGame[0];
     const gameData = currentGame[1];
     correctWord = gameData.correctWord;
     if(correctGuess) {
-      await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord, true);
+      await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord, {finished: true });
       return res.status(201).json({message: "Congratulations! You guessed the right word", data: gameData});
     }
   } catch (error) {
