@@ -1,5 +1,4 @@
 import { Router } from "express";
-import mongoose from "mongoose";
 import HighScore from "../models/highScore.js";
 import getManyFromDB from "./getManyFromDB.js";
 
@@ -12,13 +11,11 @@ highScoreRouter.use((req, res, next) => {
 
 highScoreRouter.get('/', async (req, res) => {
   let highScores = await getManyFromDB(DBUrl, HighScore, {completionTime: 1}, 10);
-  console.log(highScores)
   highScores = highScores.map((hs)=> {
     return { ...hs,
       completionTime: hs.completionTime/1000
     }
   });
-  console.log(highScores)
   res.render("high-scores.html", {highScores: highScores});
 });
 
