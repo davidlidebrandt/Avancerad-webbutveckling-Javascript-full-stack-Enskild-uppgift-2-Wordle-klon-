@@ -12,7 +12,6 @@ import saveInDb from "./server/js/saveInDB.js";
 import getOneFromDB from "./server/js/getOneFromDB.js";
 import updateOneFromDB from "./server/js/updateOneFromDB.js"
 import highScoreRouter from "./server/js/highScoreRouter.js";
-import { countReset } from "console";
 
 dotenv.config();
 

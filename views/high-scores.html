@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
 {% block main %}
-    This is a highscore page
+    <h2>High scores</h2>
+    <h3>Top 10</h3>
+    <ul>
+    {% for hs in highScores %}
+        <li>
+            <strong>User name:</strong><span> {{ hs.userName }}</span>
+            <strong>Word:</strong><span> {{ hs.guesses | last }}</span>
+            <strong>Completion time:</strong><span> {{ hs.completionTime }} seconds</span>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
