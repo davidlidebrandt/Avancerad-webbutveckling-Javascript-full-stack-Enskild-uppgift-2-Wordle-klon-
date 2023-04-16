@@ -4,12 +4,14 @@ import axios from 'axios';
 export default function WordGuessForm({currentGame, currentGame: {currentWord, guesses}, setCurrentGame}) {
   async function enterWord(e) {
     e.preventDefault();
+    console.log(currentWord)
     const gameId = sessionStorage.activeGame;
+    const guessedWord = currentWord;
     const res = await axios.post(
       "/api/check-word",
       {
         gameId,
-        currentWord,
+        guessedWord
       },
       {
         headers: {
@@ -17,12 +19,15 @@ export default function WordGuessForm({currentGame, currentGame: {currentWord, g
         },
       }
     );
-    console.log(res);;
+    console.log(res);
   
     setCurrentGame({
         ...currentGame,
+        checkedLetters: res.data.data,
         guesses: [...guesses, currentWord]
     });
+
+    console.log("h")
 
   }
   return (
