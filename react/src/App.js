@@ -12,7 +12,7 @@ const App = () => {
   });
 
   const [currentGame, setCurrentGame] = useState({
-    checkedLetters: [{w: "correct"}, {k: "incorrect"}, {k: "incorrect"}, {t: "misplaced"}],
+    checkedLetters: [],
     currentWord: "",
     guesses: [],
     startTime: Date.now(),

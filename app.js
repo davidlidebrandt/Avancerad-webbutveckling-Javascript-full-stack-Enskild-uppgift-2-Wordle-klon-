@@ -49,7 +49,7 @@ app.post("/api/word", async (req, res) => {
     typeof duplicateLetters !== "boolean";
 
   if (incorrectInputTypes) {
-    res.status(422).json({ error: "Invalid data" });
+    return res.status(422).json({ error: "Invalid data" });
   }
 
   try {
@@ -68,10 +68,9 @@ app.post("/api/word", async (req, res) => {
     });
     await saveInDb(process.env.DB_URL, newGame);
 
-    res.status(201).json({ id: id, data: word });
+    return res.status(201).json({ id: id, data: word });
   } catch (error) {
-    console.log(error);
-    res
+    return res
       .status(500)
       .json({ error: error, errorMessage: "Error fetching the word, please try again" });
   }

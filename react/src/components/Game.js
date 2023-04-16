@@ -1,9 +1,40 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 import WordGuessForm from "./WordGuessForm";
 import "../scss/Game.scss";
 
 export default function Game({ gameOptions, currentGame, setCurrentGame }) {
+  const activeGame = sessionStorage.activeGame;
+
+  useEffect(() => {
+    if (activeGame) {
+    } else {
+      async function newGame(numberOfLetters, duplicateLetters) {
+        const res = await axios.post(
+          "/api/word",
+          {
+            numberOfLetters,
+            duplicateLetters,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(res);
+        sessionStorage.activeGame = res.data.id;
+      }
+
+      try {
+        newGame(gameOptions.numberOfLetters, gameOptions.duplicateLetters);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
+
   let currentLetters = currentGame.checkedLetters.map((l, i) => {
     if (Object.values(l)[0] === "correct") {
       return (
