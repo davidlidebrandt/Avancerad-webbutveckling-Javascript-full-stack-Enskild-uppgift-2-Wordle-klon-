@@ -30,13 +30,10 @@ export default function WordGuessForm({gameOptions, setGameOptions, currentGame,
     console.log(gameIsWon)
 
     if(gameIsWon) {
-      await setGameOptions({
-        ...gameOptions,
-        gameHasFinished: true,
-        test: "test"
+      setGameOptions((state)=> {
+        return {gameHasFinished: true}
       });
       sessionStorage.removeItem("activeGame");
-      console.log(gameOptions)
     }
 
   }
