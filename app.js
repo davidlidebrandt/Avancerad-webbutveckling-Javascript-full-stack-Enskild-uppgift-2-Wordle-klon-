@@ -68,7 +68,7 @@ app.post("/api/word", async (req, res) => {
     });
     await saveInDb(process.env.DB_URL, newGame);
 
-    return res.status(201).json({ id: id, data: word });
+    return res.status(201).json({ id: id});
   } catch (error) {
     return res
       .status(500)
@@ -84,7 +84,7 @@ app.post("/api/add-score", async(req, res)=> {
     const lastGuess = game.guesses.pop();
     const correctWord = game.correctWord;
     const scoreAlreadyAdded = await getOneFromDB(DBUrl, HighScore, {gameId: game.gameId});
-    console.log(scoreAlreadyAdded);
+
     if(lastGuess === correctWord && (!scoreAlreadyAdded)) {
       const score = new HighScore({
         id: uuid.v4(),
@@ -106,7 +106,7 @@ app.post("/api/add-score", async(req, res)=> {
 app.post("/api/check-word", async (req, res) => {
   const {gameId, guessedWord} = req.body;
   let correctWord;
-  console.log(guessedWord, gameId)
+
   try {
 
     const data = await getOneFromDB(DBUrl, Game, {id: gameId});
@@ -122,13 +122,13 @@ app.post("/api/check-word", async (req, res) => {
     correctWord = gameData.correctWord;
     if(correctGuess) {
       await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord, {finished: true });
-      return res.status(201).json({message: "Congratulations! You guessed the right word", data: gameData});
+      return res.status(201).json({message: "Congratulations! You guessed the right word", data: {...gameData, finished: true}});
     }
   } catch (error) {
     console.log(error)
      return res.status(404).json({error:error, errorMessage: "Game not found"});
   }
-  console.log(guessedWord, correctWord)
+  
   const checkedLetters = wordCheck(guessedWord, correctWord);
   
   res.status(201).json({data: checkedLetters});

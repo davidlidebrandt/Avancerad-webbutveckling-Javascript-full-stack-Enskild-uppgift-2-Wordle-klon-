@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios';
 
-export default function WordGuessForm({currentGame, currentGame: {currentWord, guesses}, setCurrentGame}) {
+export default function WordGuessForm({gameOptions, setGameOptions, currentGame, currentGame: {currentWord, guesses}, setCurrentGame}) {
   async function enterWord(e) {
     e.preventDefault();
-    console.log(currentWord)
+  
     const gameId = sessionStorage.activeGame;
     const guessedWord = currentWord;
     const res = await axios.post(
@@ -19,15 +19,25 @@ export default function WordGuessForm({currentGame, currentGame: {currentWord, g
         },
       }
     );
-    console.log(res);
   
-    setCurrentGame({
+    await setCurrentGame({
         ...currentGame,
         checkedLetters: res.data.data,
         guesses: [...guesses, currentWord]
     });
 
-    console.log("h")
+    const gameIsWon = res.data.data.finished;
+    console.log(gameIsWon)
+
+    if(gameIsWon) {
+      await setGameOptions({
+        ...gameOptions,
+        gameHasFinished: true,
+        test: "test"
+      });
+      sessionStorage.removeItem("activeGame");
+      console.log(gameOptions)
+    }
 
   }
   return (

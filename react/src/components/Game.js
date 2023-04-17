@@ -4,7 +4,7 @@ import axios from "axios";
 import WordGuessForm from "./WordGuessForm";
 import "../scss/Game.scss";
 
-export default function Game({ gameOptions, currentGame, setCurrentGame }) {
+export default function Game({ gameOptions, setGameOptions, currentGame, setCurrentGame }) {
   const activeGame = sessionStorage.activeGame;
 
   useEffect(() => {
@@ -23,7 +23,6 @@ export default function Game({ gameOptions, currentGame, setCurrentGame }) {
             },
           }
         );
-        console.log(res);
         sessionStorage.activeGame = res.data.id;
       }
 
@@ -72,6 +71,8 @@ export default function Game({ gameOptions, currentGame, setCurrentGame }) {
         </div>
       </div>
       <WordGuessForm
+        gameOptions={gameOptions}
+        setGameOptions={setGameOptions}
         currentGame={currentGame}
         setCurrentGame={setCurrentGame}
       ></WordGuessForm>
