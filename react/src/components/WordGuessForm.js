@@ -41,11 +41,12 @@ export default function WordGuessForm({gameOptions, setGameOptions, currentGame,
     } catch (error) {
       console.log(error)
     }}} className='word-guess-form'>
+      <label htmlFor="word">Enter a {gameOptions.numberOfLetters} letter word</label>
       <input value={currentWord} onChange={((e)=> { setCurrentGame({
         ...currentGame,
         currentWord: e.target.value
       })})} className='word-input' type="text" name="word" id="word"></input>
-      <button className='word-input-button' type='submit'>Enter word</button>
+      <button disabled={gameOptions.numberOfLetters !== currentWord.length} className='word-input-button' type='submit'>Enter word</button>
     </form>
   )
 }
