@@ -27,13 +27,11 @@ export default function WordGuessForm({gameOptions, setGameOptions, currentGame,
     });
 
     const gameIsWon = res.data.data.finished;
-    console.log(gameIsWon)
 
     if(gameIsWon) {
       setGameOptions((state)=> {
         return {gameHasFinished: true}
       });
-      sessionStorage.removeItem("activeGame");
     }
 
   }

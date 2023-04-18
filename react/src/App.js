@@ -33,7 +33,7 @@ const App = () => {
           setCurrentGame={setCurrentGame}
         ></Game>
       ) : gameOptions.gameHasFinished ? (
-        <ScoreForm></ScoreForm>
+        <ScoreForm setGameOptions={setGameOptions} setCurrentGame={setCurrentGame}></ScoreForm>
       ) : (
         <OptionsForm
           gameOptions={gameOptions}
