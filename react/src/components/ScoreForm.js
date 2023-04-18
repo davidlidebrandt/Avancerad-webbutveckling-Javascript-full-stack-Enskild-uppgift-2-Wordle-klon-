@@ -5,6 +5,22 @@ import axios from "axios";
 export default function ScoreForm({ setGameOptions, setCurrentGame }) {
   const [userName, setUserName] = useState("");
 
+  function resetGame() {
+    setGameOptions({
+        numberOfLetters: 4,
+        duplicateLetters: false,
+        gameHasStarted: false,
+        gameHasFinished: false,
+      });
+      setCurrentGame({
+        checkedLetters: [],
+        currentWord: "",
+        guesses: [],
+        startTime: Date.now(),
+      });
+      sessionStorage.removeItem("activeGame");
+  }
+
   async function sendScore(e) {
     e.preventDefault();
     const gameId = sessionStorage.activeGame;
@@ -20,19 +36,9 @@ export default function ScoreForm({ setGameOptions, setCurrentGame }) {
         },
       }
     );
-    setGameOptions({
-      numberOfLetters: 4,
-      duplicateLetters: false,
-      gameHasStarted: false,
-      gameHasFinished: false,
-    });
-    setCurrentGame({
-      checkedLetters: [],
-      currentWord: "",
-      guesses: [],
-      startTime: Date.now(),
-    });
-    sessionStorage.removeItem("activeGame");
+
+    resetGame();
+   
   }
   return (
     <>
@@ -56,6 +62,7 @@ export default function ScoreForm({ setGameOptions, setCurrentGame }) {
         ></input>
         <button type="submit">Send</button>
       </form>
+      <button onClick={()=>{resetGame()}}>Skip</button>
     </>
   );
 }
