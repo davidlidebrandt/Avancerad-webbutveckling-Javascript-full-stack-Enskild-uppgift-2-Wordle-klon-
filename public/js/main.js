@@ -4,6 +4,8 @@ const infoLink = document.querySelector(".info-link");
 let allMainNavLinks = document.querySelectorAll(".main-nav-link")
 const currentPath = window.location.pathname;
 
+sessionStorage.removeItem("activeGame");
+
 allMainNavLinks = Array.from(allMainNavLinks);
 allMainNavLinks.forEach((item)=> {
     item.classList.remove("active");

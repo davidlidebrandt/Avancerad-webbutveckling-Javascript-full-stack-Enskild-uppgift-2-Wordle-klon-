@@ -11,7 +11,7 @@ export default async function updateOneFromDB(
   const data = await collection.findOneAndUpdate(
     { id: id },
     updatedValues
-  );
+  ).lean();
  
   await conn.disconnect();
   if (data.correctWord === guessedWord) {

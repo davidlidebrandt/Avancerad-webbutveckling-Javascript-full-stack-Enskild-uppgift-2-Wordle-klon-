@@ -6,6 +6,7 @@ const Game = mongoose.model("Game", {
     startTime: Date,
     guesses: Array,
     correctWord: String,
+    duplicateLetters: Boolean,
     finished: Boolean
 });
 

@@ -1,5 +1,6 @@
 import logo from "./logo.png";
 import OptionsForm from "./components/OptionsForm";
+import ScoreForm from "./components/ScoreForm";
 import Game from "./components/Game";
 import { useState, useEffect } from "react";
 import React from "react";
@@ -9,10 +10,11 @@ const App = () => {
     numberOfLetters: 4,
     duplicateLetters: false,
     gameHasStarted: false,
+    gameHasFinished: false,
   });
 
   const [currentGame, setCurrentGame] = useState({
-    checkedLetters: [{w: "correct"}, {k: "incorrect"}, {k: "incorrect"}, {t: "misplaced"}],
+    checkedLetters: [],
     currentWord: "",
     guesses: [],
     startTime: Date.now(),
@@ -24,7 +26,14 @@ const App = () => {
         <img src={logo}></img>
       </h2>
       {gameOptions.gameHasStarted ? (
-        <Game gameOptions={gameOptions} currentGame={currentGame} setCurrentGame={setCurrentGame}></Game>
+        <Game
+          gameOptions={gameOptions}
+          setGameOptions={setGameOptions}
+          currentGame={currentGame}
+          setCurrentGame={setCurrentGame}
+        ></Game>
+      ) : gameOptions.gameHasFinished ? (
+        <ScoreForm setGameOptions={setGameOptions} setCurrentGame={setCurrentGame}></ScoreForm>
       ) : (
         <OptionsForm
           gameOptions={gameOptions}

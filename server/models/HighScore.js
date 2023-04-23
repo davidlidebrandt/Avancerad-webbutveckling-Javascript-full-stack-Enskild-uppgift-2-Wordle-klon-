@@ -6,6 +6,7 @@ const HighScore = mongoose.model("HighScore", {
     userName: String,
     wordLength: Number,
     guesses: Array,
+    duplicateLetters: Boolean,
     completionTime: Number
 });
 

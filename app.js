@@ -49,7 +49,7 @@ app.post("/api/word", async (req, res) => {
     typeof duplicateLetters !== "boolean";
 
   if (incorrectInputTypes) {
-    res.status(422).json({ error: "Invalid data" });
+    return res.status(422).json({ error: "Invalid data" });
   }
 
   try {
@@ -64,14 +64,14 @@ app.post("/api/word", async (req, res) => {
       startTime: new Date(),
       guesses: [],
       correctWord: word,
+      duplicateLetters: duplicateLetters,
       finished: false
     });
     await saveInDb(process.env.DB_URL, newGame);
 
-    res.status(201).json({ id: id, data: word });
+    return res.status(201).json({ id: id});
   } catch (error) {
-    console.log(error);
-    res
+    return res
       .status(500)
       .json({ error: error, errorMessage: "Error fetching the word, please try again" });
   }
@@ -79,39 +79,46 @@ app.post("/api/word", async (req, res) => {
 
 app.post("/api/add-score", async(req, res)=> {
   const { gameId, userName } = req.body;
-
+ 
   try {
     const game = await getOneFromDB(DBUrl, Game, {id: gameId});
     const lastGuess = game.guesses.pop();
     const correctWord = game.correctWord;
-    const scoreAlreadyAdded = await getOneFromDB(DBUrl, HighScore, {gameId: game.gameId});
-    console.log(scoreAlreadyAdded);
+    const scoreAlreadyAdded = await getOneFromDB(DBUrl, HighScore, {gameId: game.id});
+    
     if(lastGuess === correctWord && (!scoreAlreadyAdded)) {
+      
       const score = new HighScore({
         id: uuid.v4(),
-        gameId: game.GameId,
+        gameId: game.id,
         userName: userName,
         wordLength: game.correctWord.length,
-        guesses: game.guesses,
+        guesses: [...game.guesses, lastGuess],
+        duplicateLetters: game.duplicateLetters,
         completionTime: Date.now() - game.startTime,
       });
       const savedScore = await saveInDb(DBUrl, score);
+     
       return res.status(201).json({message: "Your score was saved", data: savedScore});
     }
     return res.status(400).json({errorMessage: "Invalid data"});
   } catch (error) {
+    console.log(error)
     res.status(400).json({errorMessage: "Invalid data", error:error});
   }
 })
 
-app.post("/check-word", async (req, res) => {
+app.post("/api/check-word", async (req, res) => {
   const {gameId, guessedWord} = req.body;
   let correctWord;
 
   try {
-    const {finished: gameAlreadyFinished} = await getOneFromDB(DBUrl, Game, {id: gameId});
-    
-    if(gameAlreadyFinished) {
+
+    const data = await getOneFromDB(DBUrl, Game, {id: gameId});
+    const {finished: gameAlreadyFinished } = data;
+    correctWord = data.correctWord;
+    const incorrectWordLength = correctWord.length !== guessedWord.length;
+    if(gameAlreadyFinished || incorrectWordLength) {
       throw "Invalid game data";
     }
     const currentGame = await updateOneFromDB(DBUrl, Game, gameId, guessedWord, { $push: { guesses: guessedWord }});
@@ -120,13 +127,15 @@ app.post("/check-word", async (req, res) => {
     correctWord = gameData.correctWord;
     if(correctGuess) {
       await updateOneFromDB(process.env.DB_URL, Game, gameId, guessedWord, {finished: true });
-      return res.status(201).json({message: "Congratulations! You guessed the right word", data: gameData});
+      return res.status(201).json({message: "Congratulations! You guessed the right word", data: {...gameData, finished: true}});
     }
   } catch (error) {
+    console.log(error)
      return res.status(404).json({error:error, errorMessage: "Game not found"});
   }
 
   const checkedLetters = wordCheck(guessedWord, correctWord);
+  
   res.status(201).json({data: checkedLetters});
 });
 

@@ -7,8 +7,7 @@
     font-weight: 700;
     font-family: 'Nunito', sans-serif;
     text-align: center;
-    width: 50%;
-    height: 50%;
+    width: 100%;
     button {
         font-family: 'Nunito', sans-serif;
         margin-bottom: 2rem;
@@ -20,6 +19,9 @@
         cursor: pointer;
         font-size: 1.25rem;
         padding: 0.5rem 2rem;
+    }
+    form {
+        padding: 1rem;
     }
     h2 {
         background-color: $c-green-dark;
